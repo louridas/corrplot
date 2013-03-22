@@ -4,9 +4,19 @@ import matplotlib.cm as cm
 from matplotlib.patches import Ellipse
 import string
 
-def corrplot(data):
+def corrplot(data, labels):
+    """Draws a correlation plot of the passed data.
+
+    data is the correlation matrix, a 2-D numpy array containing
+    the pairwise correlations between variables
+
+    labels is an array containing the variable names
+    """
     plt.figure(1)
 
+    column_labels = labels
+    row_labels = labels
+    
     ax = plt.subplot(1, 1, 1, aspect='equal')
 
     width, height = data.shape
@@ -52,15 +62,13 @@ if __name__ == "__main__":
     max_length = 20
 
     alnums = list(string.ascii_uppercase + string.digits)
-    column_labels = [''.join(np.random.choice(alnums,
-                                              np.random.randint(min_length,
-                                                                max_length)))
-                     for y in np.arange(num_rows)]
-
-    row_labels = column_labels
+    labels = [''.join(np.random.choice(alnums,
+                                       np.random.randint(min_length,
+                                                         max_length)))
+              for y in np.arange(num_rows)]
     
     shrink = 0.9
-
+    
     data = np.random.random([num_rows, num_cols])
 
     data[np.random.choice(num_rows, num_rows / 2), :] *= -1
@@ -69,6 +77,4 @@ if __name__ == "__main__":
 
     data_symm = (data + data.T) / 2
 
-    # print data_symm
-
-    corrplot(data_symm)
+    corrplot(data_symm, labels)
