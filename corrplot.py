@@ -5,7 +5,11 @@ from matplotlib.patches import Ellipse
 import string
 
 def corrplot(data, pvalues, labels):
-    """Draws a correlation plot of the passed data.
+    """Creates a correlation plot of the passed data.
+
+    The function returns the plot which can then be shown with
+    plot.show(), saved to a file with plot.savefig(), or manipulated
+    in any other standard matplotlib way.
 
     data is the correlation matrix, a 2-D numpy array containing
     the pairwise correlations between variables;
@@ -63,8 +67,8 @@ def corrplot(data, pvalues, labels):
     ytickslocs = np.arange(len(row_labels))
     ax.set_yticks(ytickslocs)
     ax.set_yticklabels(column_labels, fontsize='small')
-    
-    plt.show()
+
+    return plt
 
 if __name__ == "__main__":
     
@@ -89,4 +93,5 @@ if __name__ == "__main__":
 
     data_symm = (data + data.T) / 2
 
-    corrplot(data_symm, None, labels)
+    plot = corrplot(data_symm, None, labels)
+    plot.show()
